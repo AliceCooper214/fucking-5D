@@ -10,7 +10,7 @@
 >>
 1. 导入所在班级的五育评分码到image文件夹
 2. 修改index.js中的变量 AUTHORIZATION
-3. ```> npm run fuck```
+3. ```npm run fuck```
 
 ### TODO Forever
 >>>
