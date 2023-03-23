@@ -1,6 +1,6 @@
-const fs = require('node:fs/promises')
-const { writeFileSync, existsSync } = require('node:fs')
-const querystring = require('node:querystring')
+const fs = require('fs/promises')
+const { writeFileSync, existsSync } = require('fs')
+const querystring = require('querystring')
 const jsqr = require('jsqr');
 const Jimp = require('jimp');
 const axios = require('axios').default;
