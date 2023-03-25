@@ -1,15 +1,19 @@
 const fs = require('fs/promises')
-const { writeFileSync, existsSync } = require('fs')
+const { writeFileSync, existsSync, readFileSync } = require('fs')
 const querystring = require('querystring')
-const jsqr = require('jsqr');
-const Jimp = require('jimp');
-const axios = require('axios').default;
+const jsqr = require('jsqr')
+const Jimp = require('jimp')
+const axios = require('axios').default
+const YAML = require('yaml')
 
 const IMAGE_URL = process.cwd() + '/image'
 const DATA_URL = process.cwd() + '/data.json'
 
-// 修改token
-let AUTHORIZATION = `修改token`
+const file = readFileSync('./config.yml', 'utf8')
+const config = YAML.parse(file)
+console.log(config);
+
+let AUTHORIZATION = config.token
 let map = []
 
 const instance = axios.create({
@@ -31,28 +35,20 @@ async function bootstrap() {
     console.log(`文件已存在`);
   }
 
-  console.log(`2、设置TOKEN`);
-  if (AUTHORIZATION === "") {
-    if (process.argv0[1]) {
-      AUTHORIZATION = process.argv[1]
-    } else {
-      throw new Error("请设置token")
-    }
-  }
-  console.log(`completed!`);
-
-  console.log(`3、发起请求`);
-  for (let i = 0; i < map.length; i++) {
+  console.log(`2、发起请求`);
+  let i = 0;
+  const timer = setInterval(async function () {
+    if (i === map.length - 1) clearInterval(timer)
     const element = map[i];
     const obj = {
       "seqCode": `{\"formType\":\"ClassmatesEvaluation\",\"transcriptId\":${element.params.transcriptId}}`,
       "formData": `{\"morality\":90,\"intelligence\":90,\"physique\":90,\"aesthetics\":90,\"labour\":90}`,
       "hash": `${element.params.hash}`
     }
-    console.log(obj);
     const response = await instance.post('/ReflectionMeeting/submitEvaluationForm', obj)
     console.log(`${element.key}: ${response.data.msg}`);
-  }
+    i += 1
+  }, config.timeout)
 }
 
 async function readImagesQRCodeToDingURL() {

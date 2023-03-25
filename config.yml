@@ -1,0 +1,6 @@
+# 令牌(带上Bearer)
+token: abcdefg
+# 请求延时
+timeout: 50
+# 二维码位置(暂不支持)
+# images: D://
