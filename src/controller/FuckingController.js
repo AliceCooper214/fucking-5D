@@ -12,9 +12,7 @@ module.exports = class FuckingContoller {
     token = ctx.request.body.token
     ctx.status = 200;
 
-    console.log(bootstrap);
     const returnObj = await bootstrap(token)
-
     ctx.body = {
       msg: 'ok',
       data: returnObj
