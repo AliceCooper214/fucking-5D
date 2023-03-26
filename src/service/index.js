@@ -31,13 +31,7 @@ module.exports = async function bootstrap(token) {
     console.log(`文件已存在`);
   }
 
-  console.log(`2、设置TOKEN`);
-  if (AUTHORIZATION === "") {
-    throw new Error("请设置token")
-  }
-  console.log(`completed!`);
-
-  console.log(`3、发起请求`);
+  console.log(`2、发起请求`);
   let returnObj = {}
   for (let i = 0; i < map.length; i++) {
     const element = map[i];

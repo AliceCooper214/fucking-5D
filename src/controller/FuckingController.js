@@ -1,4 +1,4 @@
-const bootstrap = require("../api");
+const bootstrap = require("../service");
 
 let token = ''
 
